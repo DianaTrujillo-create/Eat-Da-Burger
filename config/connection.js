@@ -12,7 +12,7 @@ connection = mysql.createConnection ({
     port: 3306,
     user: "root",
     password: "Pepper0806!",
-    database: "burgers_db",
+    database: "ztgnnap4h1k2az1j",
 });
 
 
