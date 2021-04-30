@@ -16,4 +16,13 @@ router.get("/", function(req, result) {
     });
 });
 
-router.post()
+router.post("/api/burgers", function(req, result) {
+    burger.create([
+        "burger_name", "devoured"
+    ], [
+        req.body.burger_name, req.body.devoured
+    ], function(result) {
+        res.json({ id: result.insertId });
+    });
+});
+
