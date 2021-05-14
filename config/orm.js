@@ -4,7 +4,7 @@ const connection = require("../config/connection.js");
 function printQuestionMarks(num) {
     var arr = [];
 
-    for (var i =0; i < num; i++) {
+    for (var i = 0; i < num; i++) {
         arr.push("?");
     }
     
@@ -15,23 +15,19 @@ function objToSQL(obj) {
     var arr = [];
 
     for (var key in obj) {
-        var val = obj[key];
-
-        if(Object.hasOwnProperty.call(obj, key)) {
-            if(typeof value === "string" && value.indexOf(" ") >=0) {
-                value = " " + value + " ";
-            }
-            arr.push(key + "=" + value);
-        }
+        arr.push(key + "=" + obj[key]);
     }
-    return arr.toString();
+
+        return arr.toString();
 }
 
 var orm = {
-    all: function(table, callback) {
-        var queryString = "SELECT * FROM " + table + ";";
+    all: function(tableInput, callback) {
+        var queryString = "SELECT * FROM " + tableInput + ";";
         connection.query(queryString, function(err,result) {
-            if (err) throw err;
+            if (err) {
+             throw err;
+            }
             callback(result);
         });
     },
@@ -44,10 +40,13 @@ var orm = {
         queryString += "VALUES (";
         queryString += printQuestionMarks(vals.length);
         queryString += ") ";
+
         console.log(queryString);
         
         connection.query(queryString, values, function(err,result) {
-            if (err) throw err; 
+            if (err) {
+                 throw err; 
+            }
             callback(reult);
         });
     },
@@ -58,10 +57,12 @@ var orm = {
         queryString += objToSQL(objColVals);
         queryString += " WHERE ";
         queryString += condition;
-        console.log(queryString);
 
+        console.log(queryString);
         connection.query(queryString, function(err, result) {
-            if (err) throw err; 
+            if (err) {
+                throw err;
+            } 
             callback(result);
         });
     },
@@ -72,7 +73,9 @@ var orm = {
         queryString += condition;
 
         connection.query(queryString, function(err,result) {
-            if (err) throw err; 
+            if (err) {
+                throw err;
+            } 
             callback(result);
         });
     }
